@@ -26,9 +26,7 @@ set('allow_anonymous_stats', false);
 
 // 开发环境
 
-host(
-    '111.231.202.11'
-    )
+host('111.231.202.11')
     ->stage('prod')
     // ->set('branch', 'production')
     ->user('www')
