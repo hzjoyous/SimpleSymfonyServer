@@ -28,4 +28,31 @@ class DouFuGangController extends AbstractController
             'path' => 'src/Controller/DouFuGangController.php',
         ]);
     }
+
+    /**
+     * @Route("/opclean", name="opclean")
+     */
+    public function opclean()
+    {
+        if(function_exists('opcache_reset')){
+            $result = opcache_reset();
+        } else {
+            $result = false;
+        }
+        if ($result) {
+            $result = ('opclean success');
+        } else {
+            $result = ('no use opcache');
+        }
+        return $this->json([
+            'message' => 'Welcome to your new controller!',
+        ]);
+    }
+    /**
+     * @Route("/showPhpnfo", name="showPhpnfo")
+     */
+    public function showPhpnfo()
+    {
+        phpinfo();
+    }
 }
