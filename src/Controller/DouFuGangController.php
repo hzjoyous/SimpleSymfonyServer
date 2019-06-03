@@ -45,7 +45,7 @@ class DouFuGangController extends AbstractController
             $result = ('no use opcache');
         }
         return $this->json([
-            'message' => 'Welcome to your new controller!',
+            'message' => $result
         ]);
     }
     /**
