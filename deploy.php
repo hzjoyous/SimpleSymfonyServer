@@ -4,7 +4,7 @@ namespace Deployer;
 require 'recipe/symfony4.php';
 
 // Project name
-set('application', 'api.doufugang.nonodi.com');
+set('application', 'api.nonodi.com');
 
 // Project repository
 set('repository', 'https://github.com/doufugang/doufugangserver.git');
