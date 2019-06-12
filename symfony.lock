@@ -128,6 +128,9 @@
     "symfony/polyfill-mbstring": {
         "version": "v1.10.0"
     },
+    "symfony/polyfill-php72": {
+        "version": "v1.11.0"
+    },
     "symfony/process": {
         "version": "v4.2.3"
     },
@@ -139,6 +142,9 @@
             "version": "4.2",
             "ref": "5374e24d508ba8fd6ba9eb15170255fdb778316a"
         }
+    },
+    "symfony/var-dumper": {
+        "version": "v4.3.1"
     },
     "symfony/var-exporter": {
         "version": "v4.2.3"
