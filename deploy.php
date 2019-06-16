@@ -7,7 +7,7 @@ require 'recipe/symfony4.php';
 set('application', 'api.nonodi.com');
 
 // Project repository
-set('repository', 'https://github.com/doufugang/doufugangserver.git');
+set('repository', 'https://github.com/hzjoyous/api.nonodi.com.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
 set('git_tty', false);
