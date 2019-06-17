@@ -68,7 +68,7 @@ class CommentForHexoController extends AbstractController
 
 
         if (!$uuid || !$content || !$nickname) {
-
+            throw new \Exception('参数不合法');
         }
 
         $article = $articlesRepository->findOneBy(['uuid' => $uuid]);
