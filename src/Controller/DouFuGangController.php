@@ -49,9 +49,9 @@ class DouFuGangController extends AbstractController
         ]);
     }
     /**
-     * @Route("/showPhpnfo", name="showPhpnfo")
+     * @Route("/showPhpinfo", name="showPhpinfo")
      */
-    public function showPhpnfo()
+    public function showPhpinfo()
     {
         phpinfo();
     }

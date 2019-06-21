@@ -5,11 +5,13 @@
         "php": "^7.1.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-json": "*",
         "sensio/framework-extra-bundle": "^5.2",
         "symfony/console": "4.2.*",
         "symfony/dotenv": "4.2.*",
         "symfony/flex": "^1.1",
         "symfony/framework-bundle": "4.2.*",
+        "symfony/monolog-bundle": "^3.4",
         "symfony/orm-pack": "^1.0",
         "symfony/yaml": "4.2.*",
         "yzalis/identicon": "^1.2"
