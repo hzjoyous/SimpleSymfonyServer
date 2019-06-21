@@ -34,7 +34,7 @@ host('111.231.202.11')
 
 
 task('opcache_clear', function() {
-    // run('curl http://opcr.xiaozhu.com/index.php');
+    run('curl "http://api.nonodi.com/opclean"');
 });
 
 // Tasks
