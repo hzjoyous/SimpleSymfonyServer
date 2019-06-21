@@ -28,11 +28,11 @@ class DemoCommand extends Command
         $io      = new SymfonyStyle($input, $output);
         $arg1    = $input->getArgument('arg1');
 
-        if ($arg1) {
+        if ($arg1 && is_string($arg1)) {
             $io->note(sprintf('You passed an argument: %s', $arg1));
         }
 
-        if ($option1 = $input->getOption('option1')) {
+        if (($option1 = $input->getOption('option1')) && is_string($option1)) {
             $io->note($option1);
         }
 
@@ -69,7 +69,7 @@ class DemoCommand extends Command
 
         $confirmResult = $io->confirm('这是 confirm question ');
 
-        $io->writeln($confirmResult);
+        $io->writeln($confirmResult ? 'yes' : 'no');
 
         $askQuestionResult = $io->ask('What is your name?');
 
