@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190719123620 extends AbstractMigration
+final class Version20190719132324 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,7 +22,7 @@ final class Version20190719123620 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE fitness_statistics CHANGE fitness_date fitness_date VARCHAR(255) NOT NULL');
+        $this->addSql('CREATE TABLE fitness_statistics (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, number INT NOT NULL, fitness_date VARCHAR(255) NOT NULL, fitness_program INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
     }
 
     public function down(Schema $schema) : void
@@ -30,6 +30,6 @@ final class Version20190719123620 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE fitness_statistics CHANGE fitness_date fitness_date DATETIME NOT NULL');
+        $this->addSql('DROP TABLE fitness_statistics');
     }
 }
