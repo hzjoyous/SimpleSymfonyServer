@@ -40,7 +40,7 @@ class DouFuGangController extends AbstractController
             $result = false;
         }
         if ($result) {
-            $result = ('opclean success');
+            $result = ('opcache reset success');
         } else {
             $result = ('no use opcache');
         }
