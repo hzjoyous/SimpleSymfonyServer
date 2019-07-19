@@ -27,6 +27,7 @@ class FitnessStatisticsController extends AbstractController
         'Squat'        => ['id' => 4, 'name' => '深蹲'],
         'boating'      => ['id' => 5, 'name' => '划船'],
         'TwoCurls'     => ['id' => 6, 'name' => '二头弯举'],
+        'RollBelly'    => ['id' => 7, 'name' => '卷腹']
     ];
 
     const trainingProgramId = [
@@ -36,6 +37,7 @@ class FitnessStatisticsController extends AbstractController
         4 => ['type' => 'Squat', 'id' => 4, 'name' => '深蹲'],
         5 => ['type' => 'boating', 'id' => 5, 'name' => '划船'],
         6 => ['type' => 'TwoCurls', 'id' => 6, 'name' => '二头弯举'],
+        7 => ['type' => 'RollBelly', 'id' => 7, 'name' => '卷腹']
     ];
 
     public function __construct()
@@ -131,7 +133,7 @@ class FitnessStatisticsController extends AbstractController
         return $this->json([
             'status'  => 0,
             'message' => 'success',
-            'value'   => $result ,
+            'value'   => $result,
         ]);
 
     }
