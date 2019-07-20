@@ -57,6 +57,45 @@ class FitnessStatisticsController extends AbstractController
     }
 
     /**
+     * @Route("/getTodayFitnessStatistics", name="getTodayFitnessStatistics")
+     * @param RequestStack $requestStack
+     * @param EntityManagerInterface $entityManager
+     * @param FitnessStatisticsRepository $fitnessStatisticsRepository
+     */
+    public function getTodayFitnessStatistics(RequestStack $requestStack, EntityManagerInterface $entityManager, FitnessStatisticsRepository $fitnessStatisticsRepository)
+    {
+        $request   = $requestStack->getMasterRequest();
+        $userToken = $request->get('userToken');
+        if (!($userId = self::userToken[$userToken]['userId'] ?? 0)) {
+            throw new BusinessException("账号不存在");
+        }
+
+        $todayFitnessStatistics = array_reduce(self::trainingProgramId, function ($pre, $item) use ($fitnessStatisticsRepository, $userId) {
+            $fitnessStatistics = $fitnessStatisticsRepository->findOneBy([
+                'userId'      => $userId,
+                'fitnessDate' => date('Y-m-d', time() - 180),
+                'fitnessProgram' =>$item['id']
+            ]);
+
+            $pre[] = [
+                'type'         => $item['type'],
+                'name'         => $item['name'],
+                'quantityDone' => $fitnessStatistics ? $fitnessStatistics->getNumber() : 0,
+                'number'       => $fitnessStatistics ? $fitnessStatistics->getNumber() : 0
+            ];
+            return $pre;
+        }, []);
+
+        return $this->json([
+            'status'  => 0,
+            'message' => 'success',
+            'value'   => $todayFitnessStatistics,
+        ]);
+
+
+    }
+
+    /**
      * @Route("/addFitnessStatistics", name="addFitnessStatistics")
      * @param RequestStack $requestStack
      * @param EntityManagerInterface $entityManager
@@ -78,7 +117,7 @@ class FitnessStatisticsController extends AbstractController
             }
             $entity = $fitnessStatisticsRepository->findOneBy([
                 'userId'         => $userId,
-                'fitnessDate'    => date('Y-m-d',time()-180),
+                'fitnessDate'    => date('Y-m-d', time() - 180),
                 'fitnessProgram' => self::trainingProgram[$item['type']]['id']
             ]);
             if (!$entity) {
@@ -90,7 +129,7 @@ class FitnessStatisticsController extends AbstractController
                 continue;
             }
             $entity->setNumber((int)$item['number']);
-            $entity->setFitnessDate(date('Y-m-d',time()-180));
+            $entity->setFitnessDate(date('Y-m-d', time() - 180));
             $entityManager->persist($entity);
         }
 
@@ -101,7 +140,6 @@ class FitnessStatisticsController extends AbstractController
             'value'   => 1,
         ]);
     }
-
 
 
     /**
