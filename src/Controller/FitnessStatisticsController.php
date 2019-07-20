@@ -32,8 +32,8 @@ class FitnessStatisticsController extends AbstractController
 
     const trainingProgramId = [
         1 => ['type' => 'ShoulderPush', 'id' => 1, 'name' => '肩推'],
-        2 => ['type' => 'AfterBundle', 'id' => 2, 'name' => '后束'],
-        3 => ['type' => 'FrontBundle', 'id' => 3, 'name' => '前束'],
+        2 => ['type' => 'AfterBundle', 'id' => 2, 'name' => '后束(上提)'],
+        3 => ['type' => 'FrontBundle', 'id' => 3, 'name' => '前束(横拉)'],
         4 => ['type' => 'Squat', 'id' => 4, 'name' => '深蹲'],
         5 => ['type' => 'boating', 'id' => 5, 'name' => '划船'],
         6 => ['type' => 'TwoCurls', 'id' => 6, 'name' => '二头弯举'],
