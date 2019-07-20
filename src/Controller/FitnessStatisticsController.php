@@ -128,7 +128,7 @@ class FitnessStatisticsController extends AbstractController
             return $pre;
         }, []);
         $result = $result ?? [];
-        ksort($result, SORT_STRING);
+        krsort($result, SORT_STRING);
         $result = array_values($result);
         return $this->json([
             'status'  => 0,
