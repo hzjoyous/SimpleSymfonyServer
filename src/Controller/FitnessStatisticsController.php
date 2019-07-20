@@ -78,7 +78,7 @@ class FitnessStatisticsController extends AbstractController
             }
             $entity = $fitnessStatisticsRepository->findOneBy([
                 'userId'         => $userId,
-                'fitnessDate'    => (new \DateTime())->format('Y-m-d'),
+                'fitnessDate'    => date('Y-m-d',time()-180),
                 'fitnessProgram' => self::trainingProgram[$item['type']]['id']
             ]);
             if (!$entity) {
@@ -90,7 +90,7 @@ class FitnessStatisticsController extends AbstractController
                 continue;
             }
             $entity->setNumber((int)$item['number']);
-            $entity->setFitnessDate((new \DateTime())->format('Y-m-d'));
+            $entity->setFitnessDate(date('Y-m-d',time()-180));
             $entityManager->persist($entity);
         }
 
@@ -101,6 +101,8 @@ class FitnessStatisticsController extends AbstractController
             'value'   => 1,
         ]);
     }
+
+
 
     /**
      * @Route("/getFitnessStatistics",name="getFitnessStatistics")
