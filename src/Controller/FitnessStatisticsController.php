@@ -129,7 +129,7 @@ class FitnessStatisticsController extends AbstractController
                 continue;
             }
             $entity->setNumber((int) $item['number']);
-            $entity->setFitnessDate(date('Y-m-d', time() - 180));
+            $entity->setFitnessDate((string)date('Y-m-d', time() - 180));
             $entityManager->persist($entity);
         }
 
