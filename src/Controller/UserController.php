@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Entity\Session;
@@ -58,9 +60,9 @@ class UserController extends AbstractController
         $time  = (new \DateTime())->getTimestamp();
         $token = (new Builder())
             ->issuedBy('https://nonodi.com')
-            ->issuedAt($time)// Configures the time that the token was issue (iat claim)
-            ->canOnlyBeUsedAfter($time + 0)// Configures the time that the token can be used (nbf claim)
-            ->expiresAt($time + 60)// Configures the expiration time of the token (exp claim)
+            ->issuedAt($time) // Configures the time that the token was issue (iat claim)
+            ->canOnlyBeUsedAfter($time + 0) // Configures the time that the token can be used (nbf claim)
+            ->expiresAt($time + 60) // Configures the expiration time of the token (exp claim)
             ->withClaim('username', $user->getUsername())
             ->withClaim('sessionId', $session->getId())
             ->getToken();
@@ -69,7 +71,7 @@ class UserController extends AbstractController
             'status'  => 0,
             'message' => 'success',
             'value'   => [
-                'token'    => (string)$token,
+                'token'    => (string) $token,
                 'userInfo' => [
                     'username' => $user->getUsername()
                 ]
@@ -119,7 +121,7 @@ class UserController extends AbstractController
         $requestContent = $requestStack->getMasterRequest()->getContent();
         $requestArr     = json_decode($requestContent, true);
         $tokenContent   = $requestArr['token'];
-        $token          = (new JWTParer())->parse((string)$tokenContent);
+        $token          = (new JWTParer())->parse((string) $tokenContent);
         if ($token->isExpired()) {
             throw new BusinessException('认证已过期');
         }
@@ -142,7 +144,7 @@ class UserController extends AbstractController
         $requestContent = $requestStack->getMasterRequest()->getContent();
         $requestArr     = json_decode($requestContent, true);
         $tokenContent   = $requestArr['token'];
-        $token          = (new JWTParer())->parse((string)$tokenContent);
+        $token          = (new JWTParer())->parse((string) $tokenContent);
         $session        = $sessionRepository->findOneBy(['id' => $token->getClaim('sessionId')]);
         dd($session);
         if (!$session && $session->getStatus() !== 1 && $session->getExp() < time()) {

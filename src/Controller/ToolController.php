@@ -1,31 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class DouFuGangController extends AbstractController
+class ToolController extends AbstractController
 {
     /**
-     * @Route("", name="dou_fu_gang_i")
-     */
-    public function i()
-    {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/DouFuGangController.php',
-        ]);
-    }
-
-    /**
-     * @Route("/dou/fu/gang", name="dou_fu_gang")
+     * @Route("/tool", name="tool")
      */
     public function index()
     {
         return $this->json([
             'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/DouFuGangController.php',
+            'path' => 'This is ToolController',
         ]);
     }
 
@@ -34,7 +25,7 @@ class DouFuGangController extends AbstractController
      */
     public function opclean()
     {
-        if(function_exists('opcache_reset')){
+        if (function_exists('opcache_reset')) {
             $result = opcache_reset();
         } else {
             $result = false;
@@ -45,6 +36,7 @@ class DouFuGangController extends AbstractController
             $result = ('no use opcache');
         }
         return $this->json([
+            'status'  => 0,
             'message' => $result
         ]);
     }

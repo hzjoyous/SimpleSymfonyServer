@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Entity\FitnessStatistics;
@@ -74,7 +76,7 @@ class FitnessStatisticsController extends AbstractController
             $fitnessStatistics = $fitnessStatisticsRepository->findOneBy([
                 'userId'      => $userId,
                 'fitnessDate' => date('Y-m-d', time() - 180),
-                'fitnessProgram' =>$item['id']
+                'fitnessProgram' => $item['id']
             ]);
 
             $pre[] = [
@@ -91,8 +93,6 @@ class FitnessStatisticsController extends AbstractController
             'message' => 'success',
             'value'   => $todayFitnessStatistics,
         ]);
-
-
     }
 
     /**
@@ -128,7 +128,7 @@ class FitnessStatisticsController extends AbstractController
             if (!is_numeric($item['number'])) {
                 continue;
             }
-            $entity->setNumber((int)$item['number']);
+            $entity->setNumber((int) $item['number']);
             $entity->setFitnessDate(date('Y-m-d', time() - 180));
             $entityManager->persist($entity);
         }
@@ -157,7 +157,7 @@ class FitnessStatisticsController extends AbstractController
         }
 
         $fitnessStatistics = $fitnessStatisticsRepository->findBy(["userId" => $userId]);
-//        dd($fitnessStatistics);
+        //        dd($fitnessStatistics);
         $result = array_reduce($fitnessStatistics, function ($pre, FitnessStatistics $item) {
             $pre[$item->getFitnessDate()]['fitnessDate'] = $item->getFitnessDate();
             $pre[$item->getFitnessDate()]['itemList'][]  = [
@@ -175,6 +175,5 @@ class FitnessStatisticsController extends AbstractController
             'message' => 'success',
             'value'   => $result,
         ]);
-
     }
 }

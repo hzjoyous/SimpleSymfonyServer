@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Entity\Articles;
@@ -37,12 +39,10 @@ class CommentForHexoController extends AbstractController
         $identity = $request->get('identity');
         $identity = urldecode($identity);
         $article  = $articlesRepository->findOneBy(['identity' => $identity]);
-        if ($article) {
-
-        } else {
+        if ($article) { } else {
             $article = new Articles();
             $article->setIdentity($identity);
-            $article->setUuid(uniqid((string)rand(), true));
+            $article->setUuid(uniqid((string) rand(), true));
             $article->setCreatedAt(new \DateTime());
             $article->setUpdatedAt(new \DateTime());
             $entityManager->persist($article);
@@ -122,20 +122,18 @@ class CommentForHexoController extends AbstractController
         $identity = $request->get('identity');
         $identity = urldecode($identity);
         $article  = $articlesRepository->findOneBy(['identity' => $identity]);
-        if ($article) {
-
-        } else {
+        if ($article) { } else {
             $article = new Articles();
             $article->setIdentity($identity);
-            $article->setUuid(uniqid((string)rand(), true));
+            $article->setUuid(uniqid((string) rand(), true));
             $article->setCreatedAt(new \DateTime());
             $article->setUpdatedAt(new \DateTime());
             $entityManager->persist($article);
             $entityManager->flush();
         }
 
-//        $uuid    = $requestStack->getMasterRequest()->get('uuid');
-//        $article = $articlesRepository->findOneBy(['uuid' => $uuid]);
+        //        $uuid    = $requestStack->getMasterRequest()->get('uuid');
+        //        $article = $articlesRepository->findOneBy(['uuid' => $uuid]);
 
         $comments       = $commentsRepository->findBy(['articleId' => $article->getId()]);
         $commentsResult = array_map(function (Comments $item) {
@@ -158,5 +156,4 @@ class CommentForHexoController extends AbstractController
             ],
         ]);
     }
-
 }
