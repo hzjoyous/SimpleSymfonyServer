@@ -42,11 +42,6 @@ class FitnessStatisticsController extends AbstractController
         7 => ['type' => 'RollBelly', 'id' => 7, 'name' => '卷腹']
     ];
 
-    public function __construct()
-    {
-        header('Access-Control-Allow-Origin:*');
-    }
-
     /**
      * @Route("/fitness/statistics", name="fitness_statistics")
      */

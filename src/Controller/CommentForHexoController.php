@@ -17,12 +17,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CommentForHexoController extends AbstractController
 {
-
-    public function __construct()
-    {
-        header('Access-Control-Allow-Origin:*');
-    }
-
     /**
      * @Route("uuid", name="getUuid")
      * @param RequestStack $requestStack

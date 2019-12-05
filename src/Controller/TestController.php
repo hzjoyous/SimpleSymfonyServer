@@ -8,11 +8,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TestController extends AbstractController
 {
-    public function __construct()
-    {
-        header('Access-Control-Allow-Origin:*');
-    }
-
     /**
      * @Route("/test", name="test")
      */

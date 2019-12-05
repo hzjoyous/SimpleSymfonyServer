@@ -28,9 +28,14 @@ services:
 
     App\EventListener\TerminateEventListener:
         tags:
-            - { name: kernel.event_listener, event: kernel.terminate }
+            - { name: kernel.event_listener, event: kernel.terminate , priority: 0}
 
 
     App\EventListener\ExceptionListener:
         tags:
-            - { name: kernel.event_listener, event: kernel.exception }
+            - { name: kernel.event_listener, event: kernel.exception , priority: 0}
+
+    # method 优先级 method > on+event.大驼峰name > __invoke > 异常
+    App\EventListener\ResponseListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.response , method: doListen, priority: 128}
