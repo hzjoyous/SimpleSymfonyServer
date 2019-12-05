@@ -11,7 +11,7 @@ namespace App\EventListener;
 
 
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpKernel\Event\PostResponseEvent;
+use Symfony\Component\HttpKernel\Event\TerminateEvent;
 
 class TerminateEventListener
 {
@@ -24,7 +24,7 @@ class TerminateEventListener
     }
 
 
-    public function onKernelTerminate(PostResponseEvent $event): void
+    public function onKernelTerminate(TerminateEvent $event): void
     {
         $response   = $event->getResponse();
         $request    = $event->getRequest();

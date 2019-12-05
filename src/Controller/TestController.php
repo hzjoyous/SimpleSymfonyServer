@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Events\Test1925Event;
+use App\Events\TestEvent;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TestController extends AbstractController
@@ -11,7 +15,7 @@ class TestController extends AbstractController
     /**
      * @Route("/test", name="test")
      */
-    public function index()
+    public function index(): Response
     {
         return $this->json([
             'message' => 'Welcome to your new controller!',
@@ -22,7 +26,7 @@ class TestController extends AbstractController
     /**
      * @Route("/test/list", name="test_list")
      */
-    public function list()
+    public function list(EventDispatcherInterface $eventDispatcher): Response
     {
         $i = 10;
         $data = [];
@@ -32,6 +36,10 @@ class TestController extends AbstractController
                 'imgSrc' => 'images/php.png'
             ];
         }
+        
+        $eventDispatcher->dispatch(new TestEvent('asdasdsd'));
+        $eventDispatcher->dispatch(new Test1925Event('asdasdsd'));
+        
         return $this->json([
             'status'  => 0,
             'message' => 'success',
@@ -43,17 +51,14 @@ class TestController extends AbstractController
      * @Route("/test/DBTest", name="test_DBTest")
      * @param UserRepository $fitnessStatisticsRepository
      */
-    public function apiDBTest(UserRepository $userRepository)
-    { 
-        $user = $userRepository->findOneBy([
-            
-        ]);
-        
+    public function apiDBTest(UserRepository $userRepository, EventDispatcherInterface $eventDispatcher): Response
+    {
+        $user = $userRepository->findOneBy([]);
         return $this->json([
             'status'  => 0,
             'message' => 'success',
             'value'   => [
-                'userId'=>$user->getId()
+                'userId' => $user->getId()
             ],
         ]);
     }
