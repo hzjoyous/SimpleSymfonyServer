@@ -53,11 +53,13 @@ class TestController extends AbstractController
         $user = $userRepository->findOneBy([
             
         ]);
-        dump($user);
+        
         return $this->json([
             'status'  => 0,
             'message' => 'success',
-            'value'   => '$data',
+            'value'   => [
+                'userId'=>$user->getId()
+            ],
         ]);
     }
 }
