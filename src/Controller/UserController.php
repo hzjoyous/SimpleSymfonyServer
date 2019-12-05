@@ -106,12 +106,16 @@ class UserController extends AbstractController
         return $this->json([
             'status'  => 0,
             'message' => 'success',
-            'value'   => 1,
+            'value'   => [
+                'userInfo' => [
+                    'userId'=>$user->getId()
+                ]
+            ],
         ]);
     }
 
     /**
-     * @Route("/jwtCheck", name="注册")
+     * @Route("/jwtCheck", name="jwt校验")
      * @param RequestStack $requestStack
      * @param EntityManagerInterface $entityManager
      * @return \Symfony\Component\HttpFoundation\JsonResponse

@@ -24,7 +24,7 @@ class ExceptionListener
     {
         $exception     = $event->getException();
         $exceptionType = get_class($exception);
-        $errorMsg = '';
+        $errorMsg      = '';
         if ($exception instanceof NotFoundHttpException) {
             $errorMsg = 'NotFound';
         }
@@ -36,13 +36,13 @@ class ExceptionListener
             'timeStamp' => time(),
         ]);
 
+        //$response->headers->replace($exception->getHeaders());
+        //$response->setStatusCode($exception->getStatusCode());
         switch ($exceptionType) {
             case HttpExceptionInterface::class:
                 /**
                  * @var HttpExceptionInterface $exception
                  */
-                //                $response->headers->replace($exception->getHeaders());
-                //                $response->setStatusCode($exception->getStatusCode());
                 break;
             case BusinessException::class:
                 $response->setStatusCode(Response::HTTP_OK);
