@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Lcobucci\JWT\Parser as JWTParer;
 use Lcobucci\JWT\Builder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -33,10 +34,11 @@ class UserController extends AbstractController
      * @Route("/login", name="登陆")
      * @param RequestStack $requestStack
      * @param EntityManagerInterface $entityManager
-     * @param UserRepository $fitnessStatisticsRepository
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @param UserRepository $userRepository
+     * @return JsonResponse
+     * @throws BusinessException
      */
-    public function login(RequestStack $requestStack, EntityManagerInterface $entityManager, UserRepository $userRepository)
+    public function login(RequestStack $requestStack, EntityManagerInterface $entityManager, UserRepository $userRepository):JsonResponse
     {
         $requestContent = $requestStack->getMasterRequest()->getContent();
         $requestArr     = json_decode($requestContent, true);
@@ -52,7 +54,7 @@ class UserController extends AbstractController
         }
         $session = new Session();
         $session->setUserId($user->getId());
-        $session->setExp(time() + 3600);
+        $session->setExp((string)(time() + 3600));
         $session->setOrigin('api');
         $entityManager->persist($session);
         $entityManager->flush();
@@ -83,8 +85,9 @@ class UserController extends AbstractController
      * @Route("/register", name="注册")
      * @param RequestStack $requestStack
      * @param EntityManagerInterface $entityManager
-     * @param UserRepository $fitnessStatisticsRepository
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @param UserRepository $userRepository
+     * @return JsonResponse
+     * @throws BusinessException
      */
     public function register(RequestStack $requestStack, EntityManagerInterface $entityManager, UserRepository $userRepository)
     {
@@ -118,7 +121,8 @@ class UserController extends AbstractController
      * @Route("/jwtCheck", name="jwt校验")
      * @param RequestStack $requestStack
      * @param EntityManagerInterface $entityManager
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
+     * @throws BusinessException
      */
     public function jwtCheck(RequestStack $requestStack, EntityManagerInterface $entityManager)
     {
@@ -141,7 +145,8 @@ class UserController extends AbstractController
      * @param RequestStack $requestStack
      * @param EntityManagerInterface $entityManager
      * @param SessionRepository $sessionRepository
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
+     * @throws BusinessException
      */
     public function sessionCheck(RequestStack $requestStack, EntityManagerInterface $entityManager, SessionRepository $sessionRepository)
     {

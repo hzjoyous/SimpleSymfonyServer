@@ -15,17 +15,17 @@ class TestSubscriber implements EventSubscriberInterface
 {
     public function onTestEvent(TestEvent $event)
     {
-        dump(__FUNCTION__);
+        // dump(__FUNCTION__);
     }
 
     public function onTestEvent02(TestEvent $event)
     {
-        dump(__FUNCTION__);
+        // dump(__FUNCTION__);
     }
 
     public function onTest1925Event(Test1925Event $event)
     {
-        dump(__FUNCTION__);
+        // dump(__FUNCTION__);
     }
 
     public static function getSubscribedEvents()
