@@ -8,17 +8,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class LearnController extends AbstractController
 {
     /**
-     * @Route("/learn", name="learn")
-     */
-    public function index()
-    {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/LearnController.php',
-        ]);
-    }
-
-    /**
      * @Route("/wordList/{pageId}",name="wordlist")
      */
     public function getWordList($pageId)
