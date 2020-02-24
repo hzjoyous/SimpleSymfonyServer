@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class LearnController extends AbstractController
 {
     /**
-     * @Route("/wordList/{pageId}",name="wordlist")
+     * @Route("/wordList/{pageId}",name="wordlist",methods={"POST","GET"})
      */
     public function getWordList($pageId)
     {

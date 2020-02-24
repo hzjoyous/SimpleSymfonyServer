@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class TestController extends AbstractController
 {
     /**
-     * @Route("/test", name="test")
+     * @Route("/test", name="test",methods={"POST","GET"})
      */
     public function index(): Response
     {
@@ -25,7 +25,7 @@ class TestController extends AbstractController
     }
 
     /**
-     * @Route("/test/list", name="test_list")
+     * @Route("/test/list", name="test_list",methods={"POST","GET"})
      */
     public function list(EventDispatcherInterface $eventDispatcher): Response
     {
@@ -49,7 +49,7 @@ class TestController extends AbstractController
     }
 
     /**
-     * @Route("/test/DBTest", name="test_DBTest")
+     * @Route("/test/DBTest", name="test_DBTest",methods={"POST","GET"})
      * @param UserRepository $userRepository
      * @param EventDispatcherInterface $eventDispatcher
      * @return Response

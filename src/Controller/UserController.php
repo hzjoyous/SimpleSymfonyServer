@@ -25,7 +25,7 @@ class UserController extends AbstractController
 
 
     /**
-     * @Route("/register", name="注册")
+     * @Route("/register", name="注册",methods={"POST"})
      * @param RequestStack $requestStack
      * @param EntityManagerInterface $entityManager
      * @param UserRepository $userRepository
@@ -35,9 +35,9 @@ class UserController extends AbstractController
     public function register(RequestStack $requestStack, EntityManagerInterface $entityManager, UserRepository $userRepository)
     {
         $requestContent = $requestStack->getMasterRequest()->getContent();
-        $requestArr     = json_decode($requestContent, true);
-        $username       = $requestArr['username'] ?? '';
-        $password       = $requestArr['password'] ?? '';
+        $requestArr = json_decode($requestContent, true);
+        $username = $requestArr['username'] ?? '';
+        $password = $requestArr['password'] ?? '';
 
         if (!($username && $password)) {
             throw new BusinessException("输入不合法");
@@ -50,22 +50,22 @@ class UserController extends AbstractController
 
         $session = new Session();
         $session->setUserId($user->getId());
-        $session->setExp((string) (time() + 3600));
+        $session->setExp((string)(time() + 3600));
         $session->setOrigin('api');
         $entityManager->persist($session);
         $entityManager->flush();
 
         $time = time();
         $token = (new Builder())->issuedBy('simple') // Configures the issuer (iss claim)
-            ->permittedFor('*') // Configures the audience (aud claim)
-            ->identifiedBy('4f1g23a12aa', true) // Configures the id (jti claim), replicating as a header item
-            ->issuedAt($time) // Configures the time that the token was issue (iat claim)
-            ->canOnlyBeUsedAfter($time + 60) // Configures the time that the token can be used (nbf claim)
-            ->expiresAt($time + 3600) // Configures the expiration time of the token (exp claim)
-            ->withClaim('sessionId', $session->getId()) // Configures a new claim, called "uid"
-            ->getToken(); // Retrieves the generated token
+        ->permittedFor('*') // Configures the audience (aud claim)
+        ->identifiedBy('4f1g23a12aa', true) // Configures the id (jti claim), replicating as a header item
+        ->issuedAt($time) // Configures the time that the token was issue (iat claim)
+        ->canOnlyBeUsedAfter($time + 60) // Configures the time that the token can be used (nbf claim)
+        ->expiresAt($time + 3600) // Configures the expiration time of the token (exp claim)
+        ->withClaim('sessionId', $session->getId()) // Configures a new claim, called "uid"
+        ->getToken(); // Retrieves the generated token
 
-        
+
         return $this->responseData([
             'userInfo' => [
                 'userId' => $user->getId(),
@@ -76,9 +76,8 @@ class UserController extends AbstractController
     }
 
 
-
     /**
-     * @Route("/login", name="登陆")
+     * @Route("/login", name="登陆",methods={"POST"})
      * @param RequestStack $requestStack
      * @param EntityManagerInterface $entityManager
      * @param UserRepository $userRepository
@@ -88,9 +87,9 @@ class UserController extends AbstractController
     public function login(RequestStack $requestStack, EntityManagerInterface $entityManager, UserRepository $userRepository): JsonResponse
     {
         $requestContent = $requestStack->getMasterRequest()->getContent();
-        $requestArr     = json_decode($requestContent, true);
-        $username       = $requestArr['username'] ?? '';
-        $password       = $requestArr['password'] ?? '';
+        $requestArr = json_decode($requestContent, true);
+        $username = $requestArr['username'] ?? '';
+        $password = $requestArr['password'] ?? '';
 
 
         $user = $userRepository->findOneBy([
@@ -103,24 +102,24 @@ class UserController extends AbstractController
 
         $session = new Session();
         $session->setUserId($user->getId());
-        $session->setExp((string) (time() + 3600));
+        $session->setExp((string)(time() + 3600));
         $session->setOrigin('api');
         $entityManager->persist($session);
         $entityManager->flush();
 
         $time = time();
         $token = (new Builder())->issuedBy('simple') // Configures the issuer (iss claim)
-            ->permittedFor('*') // Configures the audience (aud claim)
-            ->identifiedBy('4f1g23a12aa', true) // Configures the id (jti claim), replicating as a header item
-            ->issuedAt($time) // Configures the time that the token was issue (iat claim)
-            ->canOnlyBeUsedAfter($time + 60) // Configures the time that the token can be used (nbf claim)
-            ->expiresAt($time + 3600) // Configures the expiration time of the token (exp claim)
-            ->withClaim('sessionId', $session->getId()) // Configures a new claim, called "uid"
-            ->getToken(); // Retrieves the generated token
+        ->permittedFor('*') // Configures the audience (aud claim)
+        ->identifiedBy('4f1g23a12aa', true) // Configures the id (jti claim), replicating as a header item
+        ->issuedAt($time) // Configures the time that the token was issue (iat claim)
+        ->canOnlyBeUsedAfter($time + 60) // Configures the time that the token can be used (nbf claim)
+        ->expiresAt($time + 3600) // Configures the expiration time of the token (exp claim)
+        ->withClaim('sessionId', $session->getId()) // Configures a new claim, called "uid"
+        ->getToken(); // Retrieves the generated token
 
 
         return $this->responseData([
-            'token'    => (string) $token,
+            'token' => (string)$token,
             'userInfo' => [
                 'username' => $user->getUsername()
             ]
@@ -138,9 +137,9 @@ class UserController extends AbstractController
     public function jwtCheck(RequestStack $requestStack, EntityManagerInterface $entityManager)
     {
         $requestContent = $requestStack->getMasterRequest()->getContent();
-        $requestArr     = json_decode($requestContent, true);
-        $tokenContent   = $requestArr['token'];
-        $token          = (new JWTParer())->parse((string) $tokenContent);
+        $requestArr = json_decode($requestContent, true);
+        $tokenContent = $requestArr['token'];
+        $token = (new JWTParer())->parse((string)$tokenContent);
         if ($token->isExpired()) {
             throw new BusinessException('认证已过期');
         }
@@ -148,7 +147,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/sessionCheck", name="session验证")
+     * @Route("/sessionCheck", name="session验证",methods={"POST"})
      * @param RequestStack $requestStack
      * @param EntityManagerInterface $entityManager
      * @param SessionRepository $sessionRepository
@@ -158,10 +157,10 @@ class UserController extends AbstractController
     public function sessionCheck(RequestStack $requestStack, EntityManagerInterface $entityManager, SessionRepository $sessionRepository)
     {
         $requestContent = $requestStack->getMasterRequest()->getContent();
-        $requestArr     = json_decode($requestContent, true);
-        $tokenContent   = $requestArr['token'];
-        $token          = (new JWTParer())->parse((string) $tokenContent);
-        $session        = $sessionRepository->findOneBy(['id' => $token->getClaim('sessionId')]);
+        $requestArr = json_decode($requestContent, true);
+        $tokenContent = $requestArr['token'];
+        $token = (new JWTParer())->parse((string)$tokenContent);
+        $session = $sessionRepository->findOneBy(['id' => $token->getClaim('sessionId')]);
         if (!$session && $session->getStatus() !== 1 && $session->getExp() < time()) {
             throw new BusinessException('会话过期');
         }

@@ -14,15 +14,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class CommentForHexoController extends AbstractController
 {
     /**
-     * @Route("uuid", name="getUuid")
+     * @Route("uuid", name="getUuid",methods={"POST","GET"})
      * @param RequestStack $requestStack
      * @param ArticlesRepository $articlesRepository
      * @param EntityManagerInterface $entityManager
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
+     * @throws \Exception
      */
     public function getUuid(RequestStack $requestStack, ArticlesRepository $articlesRepository, EntityManagerInterface $entityManager)
     {
@@ -31,7 +33,7 @@ class CommentForHexoController extends AbstractController
             throw new \Exception('');
         }
         $identity = $request->get('identity');
-        $identity = urldecode($identity);
+        $identity = urldecode((string)$identity);
         $article  = $articlesRepository->findOneBy(['identity' => $identity]);
         if ($article) { } else {
             $article = new Articles();
@@ -51,11 +53,12 @@ class CommentForHexoController extends AbstractController
     }
 
     /**
-     * @Route("addComment", name="添加评论")
+     * @Route("addComment", name="添加评论",methods={"POST","GET"})
      * @param RequestStack $requestStack
      * @param ArticlesRepository $articlesRepository
      * @param EntityManagerInterface $entityManager
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
+     * @throws \Exception
      */
     public function addCommentByUUID(RequestStack $requestStack, ArticlesRepository $articlesRepository, EntityManagerInterface $entityManager)
     {
@@ -101,11 +104,13 @@ class CommentForHexoController extends AbstractController
     }
 
     /**
-     * @Route("comments", name="获取评论")
+     * @Route("comments", name="获取评论",methods={"POST","GET"})
      * @param RequestStack $requestStack
      * @param ArticlesRepository $articlesRepository
      * @param CommentsRepository $commentsRepository
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @param EntityManagerInterface $entityManager
+     * @return JsonResponse
+     * @throws \Exception
      */
     public function getComment(RequestStack $requestStack, ArticlesRepository $articlesRepository, CommentsRepository $commentsRepository, EntityManagerInterface $entityManager)
     {
