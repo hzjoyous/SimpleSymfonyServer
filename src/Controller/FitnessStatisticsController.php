@@ -95,6 +95,8 @@ class FitnessStatisticsController extends AbstractController
      * @param RequestStack $requestStack
      * @param EntityManagerInterface $entityManager
      * @param FitnessStatisticsRepository $fitnessStatisticsRepository
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @throws BusinessException
      */
     public function addFitnessStatistics(RequestStack $requestStack, EntityManagerInterface $entityManager, FitnessStatisticsRepository $fitnessStatisticsRepository)
     {

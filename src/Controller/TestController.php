@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Events\Test1925Event;
 use App\Events\TestEvent;
 use App\Repository\UserRepository;
@@ -49,16 +50,21 @@ class TestController extends AbstractController
 
     /**
      * @Route("/test/DBTest", name="test_DBTest")
-     * @param UserRepository $fitnessStatisticsRepository
+     * @param UserRepository $userRepository
+     * @param EventDispatcherInterface $eventDispatcher
+     * @return Response
      */
     public function apiDBTest(UserRepository $userRepository, EventDispatcherInterface $eventDispatcher): Response
     {
-        $user = $userRepository->findOneBy([]);
+        $userList = $userRepository->findAll();
+        $userInfo = array_map(function(User $user){
+            return ['userName'=>$user->getUsername()];
+        },$userList);
         return $this->json([
             'status'  => 0,
             'message' => 'success',
             'value'   => [
-                'userId' => $user->getId()
+                'userInfo' => $userInfo
             ],
         ]);
     }
