@@ -10,18 +10,18 @@ trait Response
     public function responseData($data)
     {
         return $this->json([
-            'status'  => 0,
-            'message' => '',
-            'value'   => $data
+            'code'  => 0,
+            'errMsg' => '',
+            'data'   => $data
         ]);
     }
 
-    public function responeDataBuild($data)
+    public function responseDataBuild($data)
     {
         return [
-            'status'  => 0,
-            'message' => '',
-            'value'   => $data
+            'code'  => 0,
+            'errMsg' => '',
+            'data'   => $data
         ];
     }
 }

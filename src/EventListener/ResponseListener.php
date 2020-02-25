@@ -10,7 +10,7 @@ class ResponseListener
 {
     public function doListen(ResponseEvent $event)
     {
-        $response     = $event->getResponse();
+        $response = $event->getResponse();
         $response->headers->add([
             'Access-Control-Allow-Origin' => '*',
         ]);

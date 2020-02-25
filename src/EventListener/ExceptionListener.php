@@ -43,6 +43,7 @@ class ExceptionListener
                 /**
                  * @var HttpExceptionInterface $exception
                  */
+                $response->setStatusCode($exception->getCode());
                 break;
             case BusinessException::class:
                 $response->setStatusCode(Response::HTTP_OK);

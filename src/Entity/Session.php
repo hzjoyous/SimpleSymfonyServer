@@ -48,7 +48,7 @@ class Session
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $origin;
+    private $clientFrom;
 
     public function getId(): ?int
     {
@@ -103,14 +103,14 @@ class Session
         return $this;
     }
 
-    public function getOrigin(): ?string
+    public function getClientFrom(): ?string
     {
-        return $this->origin;
+        return $this->clientFrom;
     }
 
-    public function setOrigin(string $origin): self
+    public function setClientFrom(string $clientFrom): self
     {
-        $this->origin = $origin;
+        $this->clientFrom = $clientFrom;
 
         return $this;
     }
@@ -118,7 +118,7 @@ class Session
     public function setDataObj($key, string $value = ''): self
     {
         $this->dataObj[$key] = $value;
-        $this->data          = json_encode($this->dataObj);
+        $this->data = json_encode($this->dataObj);
         return $this;
     }
 
@@ -126,7 +126,7 @@ class Session
     {
         if ($this->dataObjGetFromData === 0) {
             $this->dataObjGetFromData = 1;
-            $this->dataObj            = json_decode($this->data);
+            $this->dataObj = json_decode($this->data);
             if ($this->dataObj) {
                 $this->dataObj = [];
             }
