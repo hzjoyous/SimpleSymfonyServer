@@ -9,11 +9,7 @@ trait Response
 
     public function responseData($data)
     {
-        return $this->json([
-            'code'  => 0,
-            'errMsg' => '',
-            'data'   => $data
-        ]);
+        return $this->json($this->responseDataBuild($data));
     }
 
     public function responseDataBuild($data)
@@ -21,7 +17,8 @@ trait Response
         return [
             'code'  => 0,
             'errMsg' => '',
-            'data'   => $data
+            'data'   => $data,
+            'timeStamp' => time(),
         ];
     }
 }

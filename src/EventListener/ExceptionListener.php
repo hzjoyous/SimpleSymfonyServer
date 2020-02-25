@@ -30,9 +30,9 @@ class ExceptionListener
         }
 
         $response = new JsonResponse([
-            'status'    => 4000,
-            'content'   => null,
-            'errorMsg'  => $errorMsg ? $errorMsg : $exception->getMessage(),
+            'code'    => 500,
+            'data'   => null,
+            'errMsg'  => $errorMsg ? $errorMsg : $exception->getMessage(),
             'timeStamp' => time(),
         ]);
 

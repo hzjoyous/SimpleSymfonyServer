@@ -81,7 +81,12 @@ class JwtService
     {
 //        $this->validateAuthorizationHeader();
 //        $token = $this->parseAuthorizationHeader();
-        $token = $this->request->get('accessToken');
+        $content = $this->request->getContent();
+        $request = json_decode($content, true);
+        $token = $request['accessToken'] ?? '';
+        if(!$token){
+            throw new HttpException(401, '令牌丢失');
+        }
         $token = (new Parser())->parse((string)$token);
         return $token;
     }
@@ -123,7 +128,7 @@ class JwtService
     public function refreshToken()
     {
         $token = $this->verifyJwt(true);
-        return  $this->generatorJwt(null, $token->getClaim('sessionId'));
+        return $this->generatorJwt(null, $token->getClaim('sessionId'));
     }
 
     /**
@@ -134,8 +139,8 @@ class JwtService
     public function generatorJwt($userId = null, $sessionId = null)
     {
         $origin = $this->request->headers->get('clientFrom', 'web');
-        if(!in_array($origin,['web'])){
-            throw new HttpException(404,'not found');
+        if (!in_array($origin, ['web'])) {
+            throw new HttpException(404, 'not found');
         }
         $signer = new Sha256();
 

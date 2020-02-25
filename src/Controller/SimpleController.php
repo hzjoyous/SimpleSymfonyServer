@@ -10,9 +10,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class SimpleController extends AbstractController
 {
 
-    public function __construct(RequestStack $requestStack, JwtService $jwtService)
+    public function __construct(JwtService $jwtService)
     {
-        $jwtService->verifyJwt($requestStack);
+        $jwtService->verifyJwt();
     }
 
     /**
