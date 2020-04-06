@@ -14,6 +14,5 @@ class ResponseListener
         $response->headers->add([
             'Access-Control-Allow-Origin' => '*',
         ]);
-        \Redis::AFTER;
     }
 }
