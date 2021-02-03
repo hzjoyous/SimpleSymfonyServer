@@ -40,6 +40,17 @@ class ToolController extends AbstractController
             'message' => $result
         ]);
     }
+
+    /**
+     * @Route("/showRequest", name="showPhpinfo")
+     */
+    public function showRequest()
+    {
+        return $this->json([
+            'get'=>$_GET,
+            'post'=>$_POST
+        ]);
+    }
     /**
      * @Route("/showPhpinfo", name="showPhpinfo")
      */
